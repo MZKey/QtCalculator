@@ -69,7 +69,7 @@
       <property name="font">
        <font>
         <family>Consolas</family>
-        <pointsize>14</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">

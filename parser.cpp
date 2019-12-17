@@ -183,6 +183,7 @@ bool TParser::GetToken(void)
 bool TParser::Compile(char *_expr)
 {
    pos = 0;
+   //memcpy(expr,_expr,strlen(_expr));
    expr = _expr;
    *curToken = '\0';
    if(root!=NULL)

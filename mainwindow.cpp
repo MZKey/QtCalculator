@@ -66,15 +66,25 @@ void MainWindow::keyPressEvent(QKeyEvent *key)
 	case Qt::Key_Enter:
 		on_pushButton_equally_clicked();
 		break;
-	case::Qt::Key_ParenLeft:
+    case Qt::Key_Equal:
+        on_pushButton_equally_clicked();
+        break;
+    case Qt::Key_ParenLeft:
 		on_pushButton_bracket_left_clicked();
 		break;
-	case::Qt::Key_ParenRight:
+    case Qt::Key_ParenRight:
 		on_pushButton_bracket_right_clicked();
 		break;
-	case::Qt::Key_AsciiCircum:
+    case Qt::Key_AsciiCircum:
 		on_pushButton_caret_clicked();
 		break;
+    case Qt::Key_Slash:
+        on_pushButton_div_clicked();
+        break;
+    case Qt::Key_multiply:
+        on_pushButton_mul_clicked();
+        break;
+
 	//case Qt::Key_Escape:
 	//on_pushButton_clear_clicked();
 	//break;
@@ -180,17 +190,47 @@ void MainWindow::on_pushButton_backspace_clicked()
 {
 	if(ui->lineEdit_expression->text()!="0")
 	{
+        int position = ui->lineEdit_expression->cursorPosition();
 		QString temp;
 		temp=ui->lineEdit_expression->text();
-		temp.resize(temp.size()-1);
+        temp.remove(ui->lineEdit_expression->cursorPosition()-1,1);
+        //ui->lineEdit_expression->setCursorPosition(temp.size()-1);
 		if(temp!="")
+        {
 			ui->lineEdit_expression->setText(temp);
-		ui->lineEdit_expression->setText("0");
+            ui->lineEdit_expression->setCursorPosition(position-1);
+        }
+        else
+            ui->lineEdit_expression->setText("0");
 	}
 }
 
 void MainWindow::on_pushButton_equally_clicked()
 {
+    try {
+        calc.setExpression(ui->lineEdit_expression->text());
+        calc.calculate();
+        ui->label_Result->setText(calc.getResult());
+        ui->textEdit_history->append(ui->lineEdit_expression->text() + "=" + calc.getResult());
+    } catch (calculator::err er) {
+        switch (er) {
+            case 1:
+                ui->label_Result->setText("Empty expression");
+                break;
+            case 2:
+                ui->label_Result->setText("Div by zero");
+                break;
+            case 3:
+                ui->label_Result->setText("Expression contains equal sign");
+                break;
+            case 4:
+                ui->label_Result->setText("Something went wrong");
+                break;
+        }
+    }
+
+
+    /*
 	QString str1 = ui->lineEdit_expression->text();
 	QString result;
 	QByteArray ba = str1.toLatin1();
@@ -203,6 +243,7 @@ void MainWindow::on_pushButton_equally_clicked()
 		ui->label_Result->setText("Div by zero");
 	else
 		ui->label_Result->setText(result);
+     */
 }
 
 void MainWindow::on_pushButton_bracket_left_clicked()
@@ -266,4 +307,9 @@ void MainWindow::on_pushButton_sqrt_clicked()
 void MainWindow::on_pushButton_caret_clicked()
 {
 	ui->lineEdit_expression->insert("^");
+}
+
+void MainWindow::on_pushButton_clear_history_clicked()
+{
+    ui->textEdit_history->clear();
 }

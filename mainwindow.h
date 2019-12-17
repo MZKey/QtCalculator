@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QKeyEvent>
 #include "parser.h"
+#include "calculator.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -82,8 +83,12 @@ private slots:
 
 	void on_pushButton_caret_clicked();
 
+    void on_pushButton_clear_history_clicked();
+
 private:
 	Ui::MainWindow *ui;
+
+    calculator calc;
 
 	bool historyVisible = false;
 };
