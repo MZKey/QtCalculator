@@ -8,7 +8,6 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->setupUi(this);
 	ui->textEdit_history->setVisible(historyVisible);
 	ui->pushButton_clear_history->setVisible(historyVisible);
-	ui->centralwidget->resize(QSize(400,200));
 }
 
 MainWindow::~MainWindow()
@@ -189,7 +188,18 @@ void MainWindow::on_pushButton_backspace_clicked()
 
 void MainWindow::on_pushButton_equally_clicked()
 {
-
+	QString str1 = ui->lineEdit_expression->text();
+	QString result;
+	QByteArray ba = str1.toLatin1();
+	char *c_str2 = ba.data();
+	TParser parser;
+	parser.Compile(c_str2);
+	parser.Evaluate();
+	result = QString::number(parser.GetResult());
+	if(result == "inf")
+		ui->label_Result->setText("Div by zero");
+	else
+		ui->label_Result->setText(result);
 }
 
 void MainWindow::on_pushButton_bracket_left_clicked()
