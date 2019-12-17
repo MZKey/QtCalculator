@@ -80,6 +80,8 @@ private slots:
 
 	void on_pushButton_sqrt_clicked();
 
+	void on_pushButton_caret_clicked();
+
 private:
 	Ui::MainWindow *ui;
 

@@ -72,6 +72,9 @@ void MainWindow::keyPressEvent(QKeyEvent *key)
 	case::Qt::Key_ParenRight:
 		on_pushButton_bracket_right_clicked();
 		break;
+	case::Qt::Key_AsciiCircum:
+		on_pushButton_caret_clicked();
+		break;
 	//case Qt::Key_Escape:
 	//on_pushButton_clear_clicked();
 	//break;
@@ -258,4 +261,9 @@ void MainWindow::on_pushButton_sqrt_clicked()
 {
 	addTextInLineEdit("sqrt()");
 	ui->lineEdit_expression->setCursorPosition(ui->lineEdit_expression->cursorPosition()-1);
+}
+
+void MainWindow::on_pushButton_caret_clicked()
+{
+	ui->lineEdit_expression->insert("^");
 }
