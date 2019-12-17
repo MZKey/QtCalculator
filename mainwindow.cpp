@@ -258,20 +258,19 @@ void MainWindow::on_pushButton_bracket_right_clicked()
 
 void MainWindow::on_pushButton_exp_clicked()
 {
-	ui->lineEdit_expression->insert("exp()");
+	addTextInLineEdit("exp()");
 	ui->lineEdit_expression->setCursorPosition(ui->lineEdit_expression->cursorPosition()-1);
 }
 
 void MainWindow::on_pushButton_ln_clicked()
 {
-	ui->lineEdit_expression->insert("ln()");
+	addTextInLineEdit("ln()");
 	ui->lineEdit_expression->setCursorPosition(ui->lineEdit_expression->cursorPosition()-1);
 }
 
 void MainWindow::on_pushButton_pi_clicked()
 {
-	addTextInLineEdit("pi()");
-	ui->lineEdit_expression->setCursorPosition(ui->lineEdit_expression->cursorPosition()-1);
+	addTextInLineEdit("pi");
 }
 
 void MainWindow::on_pushButton_tan_clicked()
