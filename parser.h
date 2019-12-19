@@ -86,6 +86,17 @@ class TParser
    double Evaluate(double x, ...) { SetX(&x); return Evaluate(); }
 
    double GetResult(void) { return result; }
+
+
+   enum trigonometryMode {
+       Radians = 1,
+       Degrees = 2
+   };
+
+   void setTrigonometryMode(trigonometryMode setMode);
+
+  private:
+   trigonometryMode mode = Radians;
 };
 
 #endif

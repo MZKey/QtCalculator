@@ -2,7 +2,8 @@
 
 calculator::calculator()
 {
-
+    TParser::trigonometryMode mode = TParser::Degrees;
+    parser.setTrigonometryMode(mode);
 }
 
 void calculator::setExpression(QString str)

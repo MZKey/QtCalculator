@@ -1,6 +1,6 @@
 // parser.cpp
-// Этот файл содержит реализацию класса TParser,
-// осуществляющего разбор заданного математического выражения.
+// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ TParser,
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
 // Written by Chaos Master, 11th of Febrary, 2000.
 
 // Includes
@@ -382,28 +382,50 @@ double TParser::CalcTree(TParserNode *tree)
             return -CalcTree(tree->left);
 
          case OP_SIN:
-            return sin(CalcTree(tree->left));
+            if(mode == Radians)
+                return sin(CalcTree(tree->left));
+            else
+                return sin(CalcTree(tree->left)*(M_PI/180));
 
          case OP_COS:
-            return cos(CalcTree(tree->left));
+            if(mode == Radians)
+                return cos(CalcTree(tree->left));
+            else
+                return cos(CalcTree(tree->left)*(M_PI/180));
 
          case OP_TG:
-            return tan(CalcTree(tree->left));
+            if(mode == Radians)
+                return tan(CalcTree(tree->left));
+            else
+                return tan(CalcTree(tree->left)*(M_PI/180));
 
          case OP_CTG:
-            return 1.0/tan(CalcTree(tree->left));
+            if(mode == Radians)
+                return 1.0/tan(CalcTree(tree->left));
+            else
+                return 1.0/tan(CalcTree(tree->left));
 
          case OP_ARCSIN:
-            return asin(CalcTree(tree->left));
+            if(mode == Radians)
+                return asin(CalcTree(tree->left));
+            else
+                return asin(CalcTree(tree->left)*(M_PI/180));
 
          case OP_ARCCOS:
-            return acos(CalcTree(tree->left));
+            if(mode == Radians)
+                return acos(CalcTree(tree->left));
+            else
+                return acos(CalcTree(tree->left)*(M_PI/180));
 
          case OP_ARCTG:
-            return atan(CalcTree(tree->left));
+            if(mode == Radians)
+                return atan(CalcTree(tree->left));
+            else
+                return atan(CalcTree(tree->left)*(M_PI/180));
 
          case OP_ARCCTG:
-            return M_PI/2.0-atan(CalcTree(tree->left));
+            if(mode == Radians)
+                return M_PI/2.0-atan(CalcTree(tree->left));
 
          case OP_SH:
             temp = CalcTree(tree->left);
@@ -450,4 +472,10 @@ void TParser::DelTree(TParserNode *tree)
    delete tree;
 
    return;
+}
+
+
+void TParser::setTrigonometryMode(TParser::trigonometryMode setMode)
+{
+    mode = setMode;
 }

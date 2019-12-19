@@ -6,8 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
 	, ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
-	ui->textEdit_history->setVisible(historyVisible);
-	ui->pushButton_clear_history->setVisible(historyVisible);
+    ui->textEdit_history->setVisible(false);
+    ui->pushButton_clear_history->setVisible(false);
 }
 
 MainWindow::~MainWindow()
@@ -101,9 +101,8 @@ void MainWindow::addTextInLineEdit(QString text)
 
 void MainWindow::on_pushButton_history_clicked()
 {
-	historyVisible = !historyVisible;
-	ui->textEdit_history->setVisible(historyVisible);
-	ui->pushButton_clear_history->setVisible(historyVisible);
+    ui->textEdit_history->setVisible(!ui->textEdit_history->isVisible());
+    ui->pushButton_clear_history->setVisible(!ui->pushButton_clear_history->isVisible());
 }
 
 void MainWindow::on_pushButton_c_clicked()

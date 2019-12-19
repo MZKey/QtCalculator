@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <QKeyEvent>
-#include "parser.h"
 #include "calculator.h"
 
 QT_BEGIN_NAMESPACE
@@ -90,6 +89,10 @@ private:
 
     calculator calc;
 
-	bool historyVisible = false;
+    enum calculatorMode{
+        simple = 1,
+
+    };
+
 };
 #endif // MAINWINDOW_H
