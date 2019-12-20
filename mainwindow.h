@@ -22,6 +22,8 @@ private slots:
 
 	void addTextInLineEdit(QString text);
 
+    void simpleAction(QString begin, QString end);
+
 	void on_pushButton_history_clicked();
 
 	void on_pushButton_c_clicked();
@@ -84,15 +86,16 @@ private slots:
 
     void on_pushButton_clear_history_clicked();
 
+    void on_actionStandard_changed();
+
+    void on_actionAdvanced_changed();
+
 private:
 	Ui::MainWindow *ui;
 
     calculator calc;
 
-    enum calculatorMode{
-        simple = 1,
-
-    };
+    QString expression;
 
 };
 #endif // MAINWINDOW_H

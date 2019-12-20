@@ -10,6 +10,7 @@ public:
     calculator();
 
     void setExpression(QString str);
+    void setMode(TParser::trigonometryMode mode);
     void calculate();
     QString getResult();
 

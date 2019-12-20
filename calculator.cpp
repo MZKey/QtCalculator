@@ -2,13 +2,18 @@
 
 calculator::calculator()
 {
-    TParser::trigonometryMode mode = TParser::Degrees;
+    TParser::trigonometryMode mode = TParser::Radians;
     parser.setTrigonometryMode(mode);
 }
 
 void calculator::setExpression(QString str)
 {
     str1 = str;
+}
+
+void calculator::setMode(TParser::trigonometryMode mode)
+{
+    parser.setTrigonometryMode(mode);
 }
 
 void calculator::calculate()

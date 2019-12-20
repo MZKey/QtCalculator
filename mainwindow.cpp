@@ -96,7 +96,13 @@ void MainWindow::addTextInLineEdit(QString text)
 	if(ui->lineEdit_expression->text() == "" || ui->lineEdit_expression->text() == "0")
 		ui->lineEdit_expression->setText(text);
 	else
-		ui->lineEdit_expression->insert(text);
+        ui->lineEdit_expression->insert(text);
+}
+
+void MainWindow::simpleAction(QString begin, QString end)
+{
+    expression=begin+ui->lineEdit_expression->text()+end;
+    on_pushButton_equally_clicked();
 }
 
 void MainWindow::on_pushButton_history_clicked()
@@ -207,10 +213,26 @@ void MainWindow::on_pushButton_backspace_clicked()
 void MainWindow::on_pushButton_equally_clicked()
 {
     try {
-        calc.setExpression(ui->lineEdit_expression->text());
+        TParser::trigonometryMode mode;
+        if(ui->radioButton_radians->isChecked()) mode = TParser::Radians;
+        else mode = TParser::Degrees;
+        calc.setMode(mode);
+        if(ui->actionAdvanced->isChecked())
+            calc.setExpression(ui->lineEdit_expression->text());
+        else
+        {
+            if(expression.isEmpty()) expression = ui->lineEdit_expression->text();
+            calc.setExpression(expression);
+        }
         calc.calculate();
         ui->label_Result->setText(calc.getResult());
-        ui->textEdit_history->append(ui->lineEdit_expression->text() + "=" + calc.getResult());
+        if(ui->actionAdvanced->isChecked())
+            ui->textEdit_history->append(ui->lineEdit_expression->text() + "=" + calc.getResult());
+        else
+        {
+            ui->textEdit_history->append(expression + "=" + calc.getResult());
+            expression.clear();
+        }
     } catch (calculator::err er) {
         switch (er) {
             case 1:
@@ -257,14 +279,20 @@ void MainWindow::on_pushButton_bracket_right_clicked()
 
 void MainWindow::on_pushButton_exp_clicked()
 {
-	addTextInLineEdit("exp()");
-	ui->lineEdit_expression->setCursorPosition(ui->lineEdit_expression->cursorPosition()-1);
+    if(ui->actionAdvanced->isChecked())
+    {
+        addTextInLineEdit("exp()");
+        ui->lineEdit_expression->setCursorPosition(ui->lineEdit_expression->cursorPosition()-1);
+    } else simpleAction("exp(",")");
 }
 
 void MainWindow::on_pushButton_ln_clicked()
 {
-	addTextInLineEdit("ln()");
-	ui->lineEdit_expression->setCursorPosition(ui->lineEdit_expression->cursorPosition()-1);
+    if(ui->actionAdvanced->isChecked())
+    {
+        addTextInLineEdit("ln()");
+        ui->lineEdit_expression->setCursorPosition(ui->lineEdit_expression->cursorPosition()-1);
+    } else simpleAction("ln(",")");
 }
 
 void MainWindow::on_pushButton_pi_clicked()
@@ -274,32 +302,47 @@ void MainWindow::on_pushButton_pi_clicked()
 
 void MainWindow::on_pushButton_tan_clicked()
 {
-	addTextInLineEdit("tan()");
-	ui->lineEdit_expression->setCursorPosition(ui->lineEdit_expression->cursorPosition()-1);
+    if(ui->actionAdvanced->isChecked())
+    {
+        addTextInLineEdit("tg()");
+        ui->lineEdit_expression->setCursorPosition(ui->lineEdit_expression->cursorPosition()-1);
+    } else simpleAction("tg(",")");
 }
 
 void MainWindow::on_pushButton_ctg_clicked()
 {
-	addTextInLineEdit("ctg()");
-	ui->lineEdit_expression->setCursorPosition(ui->lineEdit_expression->cursorPosition()-1);
+    if(ui->actionAdvanced->isChecked())
+    {
+        addTextInLineEdit("ctg()");
+        ui->lineEdit_expression->setCursorPosition(ui->lineEdit_expression->cursorPosition()-1);
+    }else simpleAction("ctg(",")");
 }
 
 void MainWindow::on_pushButton_sin_clicked()
 {
-	addTextInLineEdit("sin()");
-	ui->lineEdit_expression->setCursorPosition(ui->lineEdit_expression->cursorPosition()-1);
+    if(ui->actionAdvanced->isChecked())
+    {
+        addTextInLineEdit("sin()");
+        ui->lineEdit_expression->setCursorPosition(ui->lineEdit_expression->cursorPosition()-1);
+    } else simpleAction("sin(",")");
 }
 
 void MainWindow::on_pushButton_cos_clicked()
 {
-	addTextInLineEdit("cos()");
-	ui->lineEdit_expression->setCursorPosition(ui->lineEdit_expression->cursorPosition()-1);
+    if(ui->actionAdvanced->isChecked())
+    {
+        addTextInLineEdit("cos()");
+        ui->lineEdit_expression->setCursorPosition(ui->lineEdit_expression->cursorPosition()-1);
+    } else simpleAction("cos(",")");
 }
 
 void MainWindow::on_pushButton_sqrt_clicked()
 {
-	addTextInLineEdit("sqrt()");
-	ui->lineEdit_expression->setCursorPosition(ui->lineEdit_expression->cursorPosition()-1);
+    if(ui->actionAdvanced->isChecked())
+    {
+        addTextInLineEdit("sqrt()");
+        ui->lineEdit_expression->setCursorPosition(ui->lineEdit_expression->cursorPosition()-1);
+    } else simpleAction("sqrt(",")");
 }
 
 void MainWindow::on_pushButton_caret_clicked()
@@ -310,4 +353,14 @@ void MainWindow::on_pushButton_caret_clicked()
 void MainWindow::on_pushButton_clear_history_clicked()
 {
     ui->textEdit_history->clear();
+}
+
+void MainWindow::on_actionStandard_changed()
+{
+    ui->actionAdvanced->setChecked(!ui->actionStandard->isChecked());
+}
+
+void MainWindow::on_actionAdvanced_changed()
+{
+    ui->actionStandard->setChecked(!ui->actionAdvanced->isChecked());
 }

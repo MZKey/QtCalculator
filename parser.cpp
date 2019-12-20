@@ -406,22 +406,13 @@ double TParser::CalcTree(TParserNode *tree)
                 return 1.0/tan(CalcTree(tree->left));
 
          case OP_ARCSIN:
-            if(mode == Radians)
                 return asin(CalcTree(tree->left));
-            else
-                return asin(CalcTree(tree->left)*(M_PI/180));
 
          case OP_ARCCOS:
-            if(mode == Radians)
                 return acos(CalcTree(tree->left));
-            else
-                return acos(CalcTree(tree->left)*(M_PI/180));
 
          case OP_ARCTG:
-            if(mode == Radians)
                 return atan(CalcTree(tree->left));
-            else
-                return atan(CalcTree(tree->left)*(M_PI/180));
 
          case OP_ARCCTG:
             if(mode == Radians)
